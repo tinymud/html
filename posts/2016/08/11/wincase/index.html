@@ -36,11 +36,11 @@
 
 
 
-<link rel="stylesheet" href="../../../../../scss/journal.min.5e8f3f653e9f6ce67bf72ff8ee6fee69decf7b5639a3ae7f8344750ad4e065b1.css" integrity="sha256-Xo8/ZT6fbOZ79y/47m/uad7Pe1Y5o65/g0R1CtTgZbE=" media="screen">
+<link rel="stylesheet" href="../../../../../scss/journal.min.c116bc90d171283f099f173854157ec8f183f9073b93443b2c8ad82899ee9025.css" integrity="sha256-wRa8kNFxKD8Jnxc4VBV&#43;yPGD&#43;Qc7k0Q7LIrYKJnukCU=" media="screen">
 
 
 
-<link rel="stylesheet" href="../../../../../scss/dark-mode.min.bdfa63b2e89903517dcbb1032b537d54cff3f425c19d008a78dfe49e6cd07ced.css" integrity="sha256-vfpjsuiZA1F9y7EDK1N9VM/z9CXBnQCKeN/knmzQfO0=" media="screen">
+<link rel="stylesheet" href="../../../../../scss/dark-mode.min.552aae4638a84aa57cf0b195750a49ea9131d3bb621d1ed3ebc9b14b18166536.css" integrity="sha256-VSquRjioSqV88LGVdQpJ6pEx07tiHR7T68mxSxgWZTY=" media="screen">
 
 
 <script src="//js/loadCSS.js"></script>
@@ -267,7 +267,7 @@ var _hmt = _hmt || [];
                     <p>跨平台开发有一个众所周知，但因为只是偶尔受到困扰，一般人不会在意的问题，就是windows对文件名大小写不敏感，而其他平台对文件名大小写敏感。因此可能出现在windows平台开发时一切正常，但部署/打包到其他平台下，运行时加载文件会失败。我对于这种问题也是不甚在意的，一般都是打包/部署时把所有文件转小写保存，加载文件时也把文件名转小写。不采取这种方法，一般公司也都有制定流程，可以避免出现此类问题。</p>
 <p>但再好的流程也是需要人执行的，如果执行不到位，比如美术上传资源不按规范，或者策划填表不按规范，就会出问题了。所以有前同事问我有没有检测的方法，我就尝试了一下。</p>
 <p>首先我想到的是FileInfo的Name属性，一看就是干这事的，但是真正使用时发现，如果你以小写的名字创建FileInfo，那么创建的FileInfo的Name属性也是小写的名字，并不是实际的名字。然后我就想到了逐级遍历文件夹，总是可以区分大小写，找到是否匹配的。于是经过几番测试，解决了该问题，最终代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tools</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tools</span>
 {
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsCaseMatch(<span style="color:#66d9ef">string</span> path)
     {
