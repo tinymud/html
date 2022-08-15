@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -273,87 +293,87 @@ var _hmt = _hmt || [];
                     <p>今天和人讨论了一下CPS变形为闭包回调(典型为C#和JS)，以及Lua这种具有真正堆栈，可以yield和resume的coroutine，两种以同步的形式写异步处理逻辑的解决方案的优缺点。之后生出疑问，这两种做法，到底哪一种会更消耗。我自己的判断是，在一次调用只有一两个异步调用中断时(即有2次回调，或者2次yield)，闭包回调的方式性能更好，因为coroutine的方式需要创建一个具有完全堆栈的协程，相对来说还是太重度了。但是如果一次调用中的异步调用非常多，那么coroutine的方式性能更好，因为不管多少次yield，coroutine始终只需要创建一次协程，而闭包回调的每一次调用都必须创建闭包函数，GC的开销不算小。直接上测试代码</p>
 <ul>
 <li>CPS:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
-    insert(list1, fn)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    setcb(<span style="color:#66d9ef">function</span>()
-
-    <span style="color:#66d9ef">end</span>)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        remove(list2)()
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
-
-print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
+</span></span><span style="display:flex;"><span>    insert(list1, fn)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        remove(list2)()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
+</span></span></code></pre></div></li>
 <li>coroutine:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-<span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
-<span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
-<span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
-<span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
-    insert(list1, running())
-    yield()
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
-    setcb()
-<span style="color:#66d9ef">end</span>
-
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    resume(create(test2))
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        resume(remove(list2))
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
-
-print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
+</span></span><span style="display:flex;"><span>    insert(list1, running())
+</span></span><span style="display:flex;"><span>    yield()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    resume(create(test2))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        resume(remove(list2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
+</span></span></code></pre></div></li>
 <li>输出：
 <img src="../../../../../posts/coroutine1.png" alt="1">
 coroutine的调用和唤醒/回调，比闭包回调慢不少</li>
@@ -362,105 +382,105 @@ coroutine的调用和唤醒/回调，比闭包回调慢不少</li>
 <p>接下来我把单次调用的回调次数增多</p>
 <ul>
 <li>CPS:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
-    insert(list1, fn)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    setcb(<span style="color:#66d9ef">function</span>()
-        setcb(<span style="color:#66d9ef">function</span>()
-            setcb(<span style="color:#66d9ef">function</span>()
-                setcb(<span style="color:#66d9ef">function</span>()
-                    setcb(<span style="color:#66d9ef">function</span>()
-                        setcb(<span style="color:#66d9ef">function</span>()
-                            setcb(<span style="color:#66d9ef">function</span>()
-
-                            <span style="color:#66d9ef">end</span>)
-                        <span style="color:#66d9ef">end</span>)
-                    <span style="color:#66d9ef">end</span>)
-                <span style="color:#66d9ef">end</span>)
-            <span style="color:#66d9ef">end</span>)
-        <span style="color:#66d9ef">end</span>)
-    <span style="color:#66d9ef">end</span>)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        remove(list2)()
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
-
-print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
+</span></span><span style="display:flex;"><span>    insert(list1, fn)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>        setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>            setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>                setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>                    setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>                        setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>                            setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        remove(list2)()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
+</span></span></code></pre></div></li>
 <li>coroutine:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-<span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
-<span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
-<span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
-<span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
-    insert(list1, running())
-    yield()
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
-    setcb()
-    setcb()
-    setcb()
-    setcb()
-    setcb()
-    setcb()
-    setcb()
-<span style="color:#66d9ef">end</span>
-
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    resume(create(test2))
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        resume(remove(list2))
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
-
-print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
+</span></span><span style="display:flex;"><span>    insert(list1, running())
+</span></span><span style="display:flex;"><span>    yield()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span>    setcb()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    resume(create(test2))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time1 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--开始</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time2 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--调用</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        resume(remove(list2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> time3 <span style="color:#f92672">=</span> clock()<span style="color:#75715e">--回调完全结束</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
+</span></span></code></pre></div></li>
 <li>输出：
 <img src="../../../../../posts/coroutine2.png" alt="2">
 回调的消耗仍然是coroutine处于劣势，但已经比较接近了。启动的消耗，由于coroutine需要创建比较大的堆栈，相对于闭包来说还是比较重度，因此启动仍然远远慢于闭包回调的方式。</li>
@@ -471,101 +491,101 @@ print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color
 <p>之后再来测试内存占用</p>
 <ul>
 <li>CPS:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">100000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
-    insert(list1, fn)
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
-    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
-    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
-    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
-    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
-    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
-<span style="color:#66d9ef">end</span>
-
-collectgarbage(<span style="color:#e6db74">&#34;collect&#34;</span>)
-collectgarbage(<span style="color:#e6db74">&#34;stop&#34;</span>)
-
-<span style="color:#66d9ef">local</span> count1 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> count2 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        remove(list2)()
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> count3 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-
-print(count2 <span style="color:#f92672">-</span> count1, count3 <span style="color:#f92672">-</span> count2, count3 <span style="color:#f92672">-</span> count1)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">100000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>(fn)
+</span></span><span style="display:flex;"><span>    insert(list1, fn)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>    setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()setcb(<span style="color:#66d9ef">function</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)<span style="color:#66d9ef">end</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>collectgarbage(<span style="color:#e6db74">&#34;collect&#34;</span>)
+</span></span><span style="display:flex;"><span>collectgarbage(<span style="color:#e6db74">&#34;stop&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count1 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count2 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        remove(list2)()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count3 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(count2 <span style="color:#f92672">-</span> count1, count3 <span style="color:#f92672">-</span> count2, count3 <span style="color:#f92672">-</span> count1)
+</span></span></code></pre></div></li>
 <li>coroutine:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-lua" data-lang="lua"><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">100000</span>
-
-<span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
-<span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
-<span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
-<span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
-<span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
-<span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
-<span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
-<span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
-    insert(list1, running())
-    yield()
-<span style="color:#66d9ef">end</span>
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
-<span style="color:#66d9ef">end</span>
-
-
-<span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
-    resume(create(test2))
-<span style="color:#66d9ef">end</span>
-
-collectgarbage(<span style="color:#e6db74">&#34;collect&#34;</span>)
-collectgarbage(<span style="color:#e6db74">&#34;stop&#34;</span>)
-
-<span style="color:#66d9ef">local</span> count1 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
-    test1()
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> count2 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
-    list1, list2 <span style="color:#f92672">=</span> list2, list1
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
-        resume(remove(list2))
-    <span style="color:#66d9ef">end</span>
-    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
-        <span style="color:#66d9ef">break</span>
-    <span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">end</span>
-<span style="color:#66d9ef">local</span> count3 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
-
-print(count2 <span style="color:#f92672">-</span> count1, count3 <span style="color:#f92672">-</span> count2, count3 <span style="color:#f92672">-</span> count1)
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">100000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list1 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> list2 <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> clock <span style="color:#f92672">=</span> os.clock
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> insert <span style="color:#f92672">=</span> table.insert
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> remove <span style="color:#f92672">=</span> table.remove
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> create <span style="color:#f92672">=</span> coroutine.create
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> yield <span style="color:#f92672">=</span> coroutine.yield
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> running <span style="color:#f92672">=</span> coroutine.running
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> resume <span style="color:#f92672">=</span> coroutine.resume
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">setcb</span>()
+</span></span><span style="display:flex;"><span>    insert(list1, running())
+</span></span><span style="display:flex;"><span>    yield()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test2</span>()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span>    setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb() setcb()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">test1</span>()
+</span></span><span style="display:flex;"><span>    resume(create(test2))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>collectgarbage(<span style="color:#e6db74">&#34;collect&#34;</span>)
+</span></span><span style="display:flex;"><span>collectgarbage(<span style="color:#e6db74">&#34;stop&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count1 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, count <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    test1()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count2 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">true</span> <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    list1, list2 <span style="color:#f92672">=</span> list2, list1
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">#</span>list2 <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>        resume(remove(list2))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">#</span>list1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">local</span> count3 <span style="color:#f92672">=</span> collectgarbage(<span style="color:#e6db74">&#34;count&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(count2 <span style="color:#f92672">-</span> count1, count3 <span style="color:#f92672">-</span> count2, count3 <span style="color:#f92672">-</span> count1)
+</span></span></code></pre></div></li>
 <li>输出：
 <img src="../../../../../posts/coroutine4.png" alt="4">
 coroutine的内存占用确实比闭包回调少很多。</li>

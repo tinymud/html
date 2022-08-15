@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -275,7 +295,7 @@ var _hmt = _hmt || [];
 <ol>
 <li>太多的异步回调给书写带来了很大的麻烦，对异常处理也非常不友好，模块间更容易造成耦合，而且看起来相比stackfull的coroutine节省了堆栈的开销，但实际上闭包或者promise会多构造很多个，内存、gc和调用消耗上并不一定能节省。</li>
 <li>javascript的版本问题。当前版本的javascript并不是能让人非常舒服的写代码(再没有一个语言有像javascript这么多的compile to js项目)，因此有各自编译到javascript的语言，还有ECMAScript6和ECMAScript7。到目前为止，node.js的稳定版(4.2.4)还是默认不支持ECMAScript6的，需要加上&ndash;use-strict &ndash;harmony参数。当然我推荐把这个参数写到类似gulp的脚本里。</li>
-<li>项目依赖和查找糟糕。开发方面，官方推荐通过package.json设置依赖，npm自动安装依赖包，但是npm里面的包质量参差不齐，我就遇到好几个包在类似socket.on(&lsquo;error&rsquo;)的回调中直接throw异常的，另外还有些有兼容性的问题。而本项目的查找路径和node_modules写法完全不一样，一个是./xxx/xxx一个是xxx，发现包有问题想自己修改放到项目内，还得同时修改众多的require。此外一个不是很影响体验的瑕疵，node_modules里面貌似每个项目都把自己的依赖包给下载到自己的子node_modules文件夹里面，如果依赖包里面还有依赖，又会继续包含进来，导致文件夹层次和路径非常深，不得不说这个做法比较奇葩。</li>
+<li>项目依赖和查找糟糕。开发方面，官方推荐通过package.json设置依赖，npm自动安装依赖包，但是npm里面的包质量参差不齐，我就遇到好几个包在类似socket.on(&rsquo;error&rsquo;)的回调中直接throw异常的，另外还有些有兼容性的问题。而本项目的查找路径和node_modules写法完全不一样，一个是./xxx/xxx一个是xxx，发现包有问题想自己修改放到项目内，还得同时修改众多的require。此外一个不是很影响体验的瑕疵，node_modules里面貌似每个项目都把自己的依赖包给下载到自己的子node_modules文件夹里面，如果依赖包里面还有依赖，又会继续包含进来，导致文件夹层次和路径非常深，不得不说这个做法比较奇葩。</li>
 <li>node.js很容易被误用的一点，就是认为他的session具有相关性，从而试图在内存中缓存一些东西，而node.js实际上也没有对这种做法做任何的禁止和警示。不像php等cgi，每次请求都是一次全新的页面解释，不存在任何的全局变量(为了加速可能会缓存解析结果，但只是缓存字节码或者语法树之类的，每次调用的环境肯定是全新的)，而node.js的请求并不清空环境。这一条咋看起来毫无问题，说不定还能利用这点做一些一般服务器较难实现的响应(比如实时传输文件等)。但是因为pm2等启动工具，以及node后来版本新增的cluster启动，都会导致同一用户的多次请求会被分发到不同的进程，而你毫不知情。</li>
 </ol>
 <p>以上是一个node.js初学者的使用感受，可能看起来满腹牢骚，不过也是因为教训深刻，爱恨交织。至少目前为止已经有2点我始终不会忘了：</p>

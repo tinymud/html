@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html><head>
-<title>Windows下检测文件名大小写是否匹配</title>
+<title>体验</title>
 
 
 
@@ -24,12 +24,12 @@
 
 
 
-<script src="../../../../../vendor/js/jquery.min.js" ></script>
-<script src="../../../../../vendor/js/popper.min.js" ></script>
-<script src="../../../../../vendor/js/bootstrap.min.js" ></script>
-<script src="../../../../../vendor/js/smooth-scroll.polyfills.min.js" ></script>
-<link type="text/css" rel="stylesheet" href="../../../../../vendor/css/bootstrap.min.css">
-<script src="../../../../../vendor/js/vue.min.js" ></script>
+<script src="../vendor/js/jquery.min.js" ></script>
+<script src="../vendor/js/popper.min.js" ></script>
+<script src="../vendor/js/bootstrap.min.js" ></script>
+<script src="../vendor/js/smooth-scroll.polyfills.min.js" ></script>
+<link type="text/css" rel="stylesheet" href="../vendor/css/bootstrap.min.css">
+<script src="../vendor/js/vue.min.js" ></script>
 
 
 
@@ -50,10 +50,6 @@
 
 
 
-
-  
-    <script src="https://tinymud.com/js/toc-collapse.js"></script>
-  
 
 
 
@@ -92,11 +88,9 @@ var _hmt = _hmt || [];
             
             
             
-                
             
             
-            
-            <a class="a-block nav-link-item active" href="../../../../../posts/">
+            <a class="a-block nav-link-item false" href="../posts/">
                 灵感
             </a>
             
@@ -104,9 +98,11 @@ var _hmt = _hmt || [];
             
             
             
+                
             
             
-            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+            
+            <a class="a-block nav-link-item active" href="../feelings/">
                 体验
             </a>
             
@@ -116,7 +112,7 @@ var _hmt = _hmt || [];
             
             
             
-            <a class="a-block nav-link-item false" href="../../../../../about/">
+            <a class="a-block nav-link-item false" href="../about/">
                 关于
             </a>
             
@@ -135,11 +131,6 @@ var _hmt = _hmt || [];
 </div><div ref="extraContainer" class="extra-container">
     
     
-    <div class="toc animated-visibility" :class="{ invisible: scrollY <= 140 }">
-
-
-</div>
-    
     <div class="pagination">
         <a id="globalBackToTop" class="pagination-action animated-visibility" href="#top" :class="{ invisible: scrollY == 0 }">
             <i class="material-icons pagination-action-icon">
@@ -157,6 +148,8 @@ var _hmt = _hmt || [];
         </a>
         
         
+        
+        
     </div>
 </div>
 <div class="single-column-drawer-container" ref="drawer"
@@ -169,11 +162,9 @@ var _hmt = _hmt || [];
                 
                 
                 
-                    
                 
                 
-                
-                <a class="a-block drawer-menu-item active" href="../../../../../posts/">
+                <a class="a-block drawer-menu-item false" href="../posts/">
                     灵感
                 </a>
                 
@@ -181,9 +172,11 @@ var _hmt = _hmt || [];
                 
                 
                 
+                    
                 
                 
-                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                
+                <a class="a-block drawer-menu-item active" href="../feelings/">
                     体验
                 </a>
                 
@@ -193,16 +186,11 @@ var _hmt = _hmt || [];
                 
                 
                 
-                <a class="a-block drawer-menu-item false" href="../../../../../about/">
+                <a class="a-block drawer-menu-item false" href="../about/">
                     关于
                 </a>
                 
             
-            
-            <div class="toc">
-
-
-</div>
             
         </div>
     </div>
@@ -245,123 +233,15 @@ var _hmt = _hmt || [];
             <div id="content">
 <div ref="streamContainer" class="stream-container">
     <div class="post-list-container post-list-container-shadow">
-        <div class="post">
-            
-            
-            
-
-            <div class="post-head-wrapper-text-only"
-                
-            >
-                <div class="post-title">
-                    Windows下检测文件名大小写是否匹配
-                    
-                    <div class="post-meta">
-                        
-                        <time itemprop="datePublished">
-                            2016-08-11 23:53
-                        </time>
-                        
-
-                        
-
-                        
-                            <i class="material-icons" style="">label</i>
-                            
-                                <a href="../../../../../tags/windows">windows</a>
-                                &nbsp;
-                            
-                                <a href="../../../../../tags/%E8%B7%A8%E5%B9%B3%E5%8F%B0">跨平台</a>
-                                &nbsp;
-                            
-                        
-                        
-                    </div>
-                </div>
-            </div>
-            
-            <div class="post-body-wrapper">
-                
-                <div class="post-body" v-pre>
-                
-                    <p>跨平台开发有一个众所周知，但因为只是偶尔受到困扰，一般人不会在意的问题，就是windows对文件名大小写不敏感，而其他平台对文件名大小写敏感。因此可能出现在windows平台开发时一切正常，但部署/打包到其他平台下，运行时加载文件会失败。我对于这种问题也是不甚在意的，一般都是打包/部署时把所有文件转小写保存，加载文件时也把文件名转小写。不采取这种方法，一般公司也都有制定流程，可以避免出现此类问题。</p>
-<p>但再好的流程也是需要人执行的，如果执行不到位，比如美术上传资源不按规范，或者策划填表不按规范，就会出问题了。所以有前同事问我有没有检测的方法，我就尝试了一下。</p>
-<p>首先我想到的是FileInfo的Name属性，一看就是干这事的，但是真正使用时发现，如果你以小写的名字创建FileInfo，那么创建的FileInfo的Name属性也是小写的名字，并不是实际的名字。然后我就想到了逐级遍历文件夹，总是可以区分大小写，找到是否匹配的。于是经过几番测试，解决了该问题，最终代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tools</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> IsCaseMatch(<span style="color:#66d9ef">string</span> path)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        path = path.Replace(<span style="color:#e6db74">&#39;\\&#39;</span>, <span style="color:#e6db74">&#39;/&#39;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span>[] pathes = path.Split(<span style="color:#e6db74">&#39;/&#39;</span>);
-</span></span><span style="display:flex;"><span>        DirectoryInfo dir = <span style="color:#66d9ef">new</span> DirectoryInfo(<span style="color:#e6db74">&#34;.&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">0</span>; i &lt; pathes.Length - <span style="color:#ae81ff">1</span>; i++)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            DirectoryInfo[] dirs = dir.GetDirectories(pathes[i]);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dirs.Length == <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>            DirectoryInfo dir2 = <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> j = <span style="color:#ae81ff">0</span>; j &lt; dirs.Length; j++)
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (dirs[j].Name == pathes[i])
-</span></span><span style="display:flex;"><span>                {
-</span></span><span style="display:flex;"><span>                    dir2 = dirs[j];
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (dir2 == <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>            dir = dir2;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        FileInfo[] files = dir.GetFiles(pathes[pathes.Length - <span style="color:#ae81ff">1</span>]);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (files.Length == <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">0</span>; i &lt; files.Length; i++)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (files[i].Name == pathes[pathes.Length - <span style="color:#ae81ff">1</span>])
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>目前版本只能检测相对路径，不能检测绝对路径(实际工程加载自带资源一般也不会使用绝对路径)</p>
-
-                    
-                    <HR width="100%" id="EOF">
-		    <p style="color:#777;">最后修改于 2016-08-11</p>
-                    
-                </div>
-            </div>
-            
-            
-            <nav class="post-pagination">
-
-                
-                <a class="newer-posts" href="https://tinymud.com/posts/2016/08/14/async/">
-			下回<br>async/await的多线程问题
-                </a>
-                
-                
-                
-                <a class="older-posts" href="https://tinymud.com/posts/2016/01/30/ssdb/">
-			上回<br>nosql使用感受
-                </a>
-                
-            </nav>
-            <div class="post-comment-wrapper">
-                
-
-
-
-
-
-
-
-            </div>
-        </div>
+        
     </div>
 </div>
 
-            </div><div id="single-column-footer">
+
+            </div>
+
+
+<div id="single-column-footer">
 <a rel="external nofollow" href="https://beian.miit.gov.cn" target="_blank" style="color: inherit;">湘ICP备2020021765号-1</a>
 
 </div>

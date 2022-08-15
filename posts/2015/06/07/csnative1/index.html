@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -271,9 +291,9 @@ var _hmt = _hmt || [];
                 <div class="post-body" v-pre>
                 
                     <p>P/Invokes初看起来非常简单，利用DllImport进行extern函数的声明，程序就可以在调用extern函数的时候自动查询调用到对应的非托管函数，有些类似Java的native函数，但更为简单，不需要编写相应的C函数导出。例如</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#a6e22e">[DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]</span>
-<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> testfunc();
-</code></pre></div><p>简单的P/Invokes封装可以把C库头文件的函数全部复制过来，并按照如下规则进行修改(可以通过正则表达式查找替换搞定)：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#a6e22e">[DllImport(LIB, CallingConvention = CallingConvention.Cdecl)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">extern</span> <span style="color:#66d9ef">void</span> testfunc();
+</span></span></code></pre></div><p>简单的P/Invokes封装可以把C库头文件的函数全部复制过来，并按照如下规则进行修改(可以通过正则表达式查找替换搞定)：</p>
 <ol>
 <li>C#的基元类型都可以在C里面找到对应的类型(decimal和object除外，size_t需要特别注意，要用IntPtr对应)</li>
 <li>参数和返回值里面的字符串可以替换成string</li>

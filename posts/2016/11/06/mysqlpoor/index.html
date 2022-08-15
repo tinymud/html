@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -262,87 +282,87 @@ var _hmt = _hmt || [];
                 <div class="post-body" v-pre>
                 
                     <p>在各种内存CPU核心只有1/2核，内存只有512M/1G的vps下，内存、CPU、硬盘都不是太充裕。因此主要思路是，禁止吃内存大户innodb引擎，默认使用MyISAM。禁止吃硬盘大户log-bin，再调节一些参数到合适的数值。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ini" data-lang="ini"><span style="color:#66d9ef">[mysql]</span>
-
-<span style="color:#75715e"># CLIENT #</span>
-<span style="color:#a6e22e">port</span>                             <span style="color:#f92672">=</span> <span style="color:#e6db74">3306</span>
-<span style="color:#a6e22e">socket</span>                           <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.sock</span>
-
-<span style="color:#66d9ef">[mysqld]</span>
-
-<span style="color:#75715e"># GENERAL #</span>
-<span style="color:#a6e22e">user</span>                             <span style="color:#f92672">=</span> <span style="color:#e6db74">mysql</span>
-<span style="color:#a6e22e">default-storage-engine</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">MyISAM</span>
-<span style="color:#a6e22e">default-tmp-storage-engine</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">MYISAM</span>
-<span style="color:#a6e22e">socket</span>                           <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.sock</span>
-<span style="color:#a6e22e">pid-file</span>                         <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.pid</span>
-<span style="color:#a6e22e">bind-address</span>                     <span style="color:#f92672">=</span> <span style="color:#e6db74">127.0.0.1</span>
-<span style="color:#a6e22e">lc-messages-dir</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/share/mysql/</span>
-<span style="color:#a6e22e">skip-external-locking</span>
-
-<span style="color:#75715e"># MyISAM #</span>
-<span style="color:#a6e22e">key-buffer-size</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">16M</span>
-<span style="color:#a6e22e">myisam-recover</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">FORCE,BACKUP</span>
-
-<span style="color:#75715e"># SAFETY #</span>
-<span style="color:#a6e22e">max-allowed-packet</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">16M</span>
-<span style="color:#a6e22e">max-connect-errors</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">256</span>
-<span style="color:#a6e22e">skip-name-resolve</span>
-<span style="color:#a6e22e">sysdate-is-now</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
-
-<span style="color:#75715e"># DATA STORAGE #</span>
-<span style="color:#a6e22e">datadir</span>                          <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/lib/mysql/</span>
-
-<span style="color:#75715e"># CACHES AND LIMITS #</span>
-<span style="color:#a6e22e">tmp-table-size</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">32M</span>
-<span style="color:#a6e22e">max-heap-table-size</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">32M</span>
-<span style="color:#a6e22e">query-cache-type</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">query-cache-size</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">max-connections</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">64</span>
-<span style="color:#a6e22e">thread-stack</span>                     <span style="color:#f92672">=</span> <span style="color:#e6db74">192K</span>
-<span style="color:#a6e22e">thread-cache-size</span>                <span style="color:#f92672">=</span> <span style="color:#e6db74">4</span>
-<span style="color:#a6e22e">thread-concurrency</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">2</span>
-<span style="color:#a6e22e">open-files-limit</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">1028</span>
-<span style="color:#a6e22e">table-definition-cache</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">256</span>
-<span style="color:#a6e22e">table-open-cache</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">64</span>
-
-<span style="color:#75715e"># INNODB #</span>
-<span style="color:#a6e22e">loose-skip-innodb</span>
-<span style="color:#a6e22e">loose-innodb-trx</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-locks</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-lock-waits</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmp</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmp-per-index</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmp-per-index-reset</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmp-reset</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmpmem</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-cmpmem-reset</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-buffer-page</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-buffer-page-lru</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-buffer-pool-stats</span>   <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-metrics</span>             <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-default-stopword</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-inserted</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-deleted</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-being-deleted</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-config</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-index-cache</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-ft-index-table</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-tables</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-tablestats</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-indexes</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-columns</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-fields</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-foreign</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">loose-innodb-sys-foreign-cols</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-
-<span style="color:#75715e"># LOGGING #</span>
-<span style="color:#a6e22e">log-error</span>                        <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/log/mysql/error.log</span>
-<span style="color:#a6e22e">log-queries-not-using-indexes</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
-<span style="color:#a6e22e">long-query-time</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
-<span style="color:#a6e22e">slow-query-log</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
-<span style="color:#a6e22e">slow-query-log-file</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/log/mysql/slow.log</span>
-</code></pre></div><p>重启后mysql的内存占用大概为70M+，其中和内存关系较大的是key-buffer-size、tmp-table-size和thread-cache-size属性，作用分别为缓存MyISAM的索引、执行Group By之类语言时使用的临时表内存空间、查询线程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ini" data-lang="ini"><span style="display:flex;"><span><span style="color:#66d9ef">[mysql]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CLIENT #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">port</span>                             <span style="color:#f92672">=</span> <span style="color:#e6db74">3306</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">socket</span>                           <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.sock</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">[mysqld]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># GENERAL #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">user</span>                             <span style="color:#f92672">=</span> <span style="color:#e6db74">mysql</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">default-storage-engine</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">MyISAM</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">default-tmp-storage-engine</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">MYISAM</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">socket</span>                           <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.sock</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pid-file</span>                         <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/run/mysqld/mysqld.pid</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">bind-address</span>                     <span style="color:#f92672">=</span> <span style="color:#e6db74">127.0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">lc-messages-dir</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">/usr/share/mysql/</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">skip-external-locking</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># MyISAM #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">key-buffer-size</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">16M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">myisam-recover</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">FORCE,BACKUP</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># SAFETY #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">max-allowed-packet</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">16M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">max-connect-errors</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">256</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">skip-name-resolve</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sysdate-is-now</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># DATA STORAGE #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">datadir</span>                          <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/lib/mysql/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># CACHES AND LIMITS #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">tmp-table-size</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">32M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">max-heap-table-size</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">32M</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">query-cache-type</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">query-cache-size</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">max-connections</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">64</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">thread-stack</span>                     <span style="color:#f92672">=</span> <span style="color:#e6db74">192K</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">thread-cache-size</span>                <span style="color:#f92672">=</span> <span style="color:#e6db74">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">thread-concurrency</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">open-files-limit</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">1028</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">table-definition-cache</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">256</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">table-open-cache</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># INNODB #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-skip-innodb</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-trx</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-locks</span>               <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-lock-waits</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmp</span>                 <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmp-per-index</span>       <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmp-per-index-reset</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmp-reset</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmpmem</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-cmpmem-reset</span>        <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-buffer-page</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-buffer-page-lru</span>     <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-buffer-pool-stats</span>   <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-metrics</span>             <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-default-stopword</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-inserted</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-deleted</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-being-deleted</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-config</span>           <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-index-cache</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-ft-index-table</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-tables</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-tablestats</span>      <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-indexes</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-columns</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-fields</span>          <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-foreign</span>         <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">loose-innodb-sys-foreign-cols</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># LOGGING #</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log-error</span>                        <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/log/mysql/error.log</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">log-queries-not-using-indexes</span>    <span style="color:#f92672">=</span> <span style="color:#e6db74">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">long-query-time</span>                  <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">slow-query-log</span>                   <span style="color:#f92672">=</span> <span style="color:#e6db74">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">slow-query-log-file</span>              <span style="color:#f92672">=</span> <span style="color:#e6db74">/var/log/mysql/slow.log</span>
+</span></span></code></pre></div><p>重启后mysql的内存占用大概为70M+，其中和内存关系较大的是key-buffer-size、tmp-table-size和thread-cache-size属性，作用分别为缓存MyISAM的索引、执行Group By之类语言时使用的临时表内存空间、查询线程。</p>
 <p>配置的使用环境为percona server 5.6，其他版本的mysql没有测试。</p>
 
                     

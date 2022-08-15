@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://tinymud.com/posts/2017/03/19/fileserver/</loc>
-    <lastmod>2017-03-19T17:58:34+08:00</lastmod>
-  </url><url>
     <loc>https://tinymud.com/</loc>
     <lastmod>2017-03-19T17:58:34+08:00</lastmod>
   </url><url>
     <loc>https://tinymud.com/posts/</loc>
+    <lastmod>2017-03-19T17:58:34+08:00</lastmod>
+  </url><url>
+    <loc>https://tinymud.com/posts/2017/03/19/fileserver/</loc>
     <lastmod>2017-03-19T17:58:34+08:00</lastmod>
   </url><url>
     <loc>https://tinymud.com/tags/redis/</loc>
@@ -17,10 +17,10 @@
     <loc>https://tinymud.com/tags/</loc>
     <lastmod>2017-03-12T19:09:25+08:00</lastmod>
   </url><url>
-    <loc>https://tinymud.com/posts/2017/03/12/redis/</loc>
+    <loc>https://tinymud.com/tags/%E6%8C%81%E4%B9%85%E5%8C%96/</loc>
     <lastmod>2017-03-12T19:09:25+08:00</lastmod>
   </url><url>
-    <loc>https://tinymud.com/tags/%E6%8C%81%E4%B9%85%E5%8C%96/</loc>
+    <loc>https://tinymud.com/posts/2017/03/12/redis/</loc>
     <lastmod>2017-03-12T19:09:25+08:00</lastmod>
   </url><url>
     <loc>https://tinymud.com/tags/mysql/</loc>
@@ -145,5 +145,7 @@
     <loc>https://tinymud.com/categories/</loc>
   </url><url>
     <loc>https://tinymud.com/tags/p/invokes/</loc>
+  </url><url>
+    <loc>https://tinymud.com/feelings/</loc>
   </url>
 </urlset>

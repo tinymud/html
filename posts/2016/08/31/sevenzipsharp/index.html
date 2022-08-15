@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -274,72 +294,72 @@ var _hmt = _hmt || [];
 <ul>
 <li>压缩调用：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
-{
-    <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
-    {
-        SevenZipCompressor compressor = <span style="color:#66d9ef">new</span> SevenZipCompressor();
-        <span style="color:#75715e">// 这里可以输入多个文件名/流对
-</span><span style="color:#75715e"></span>        Dictionary&lt;<span style="color:#66d9ef">string</span>, Stream&gt; dict = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, Stream&gt; { { inputpath, istream } };
-        compressor.CompressStreamDictionary(dict, ostream);
-    }
-}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        SevenZipCompressor compressor = <span style="color:#66d9ef">new</span> SevenZipCompressor();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 这里可以输入多个文件名/流对</span>
+</span></span><span style="display:flex;"><span>        Dictionary&lt;<span style="color:#66d9ef">string</span>, Stream&gt; dict = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">string</span>, Stream&gt; { { inputpath, istream } };
+</span></span><span style="display:flex;"><span>        compressor.CompressStreamDictionary(dict, ostream);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>解压调用：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
-{
-    SevenZip.SevenZipExtractor extractor = <span style="color:#66d9ef">new</span> SevenZip.SevenZipExtractor(istream);
-    extractor.ExtractArchive(outputpath);    <span style="color:#75715e">// 全部解压到指定目录
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
-    {
-        extractor.ExtractFile(<span style="color:#ae81ff">0</span>, ostream);        <span style="color:#75715e">// 流式解压指定文件
-</span><span style="color:#75715e"></span>    }
-}
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    SevenZip.SevenZipExtractor extractor = <span style="color:#66d9ef">new</span> SevenZip.SevenZipExtractor(istream);
+</span></span><span style="display:flex;"><span>    extractor.ExtractArchive(outputpath);    <span style="color:#75715e">// 全部解压到指定目录</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        extractor.ExtractFile(<span style="color:#ae81ff">0</span>, ostream);        <span style="color:#75715e">// 流式解压指定文件</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
 <li>顺便附上zlib的压缩/解压(使用zlib.net库)：</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c#" data-lang="c#"><span style="color:#75715e">// 压缩
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Compress(<span style="color:#66d9ef">string</span> inputpath, <span style="color:#66d9ef">string</span> outputpath)
-{
-    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
-    {
-        <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
-        {
-            <span style="color:#66d9ef">using</span> (ZOutputStream zstream = <span style="color:#66d9ef">new</span> ZOutputStream(ostream, zlibConst.Z_BEST_COMPRESSION))
-            {
-                CopyStream(istream, zstream);
-            }
-        }
-    }
-}
-
-<span style="color:#75715e">// 解压
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Decompress(<span style="color:#66d9ef">string</span> inputpath, <span style="color:#66d9ef">string</span> outputpath)
-{
-    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
-    {
-        <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
-        {
-            <span style="color:#66d9ef">using</span> (ZOutputStream zstream = <span style="color:#66d9ef">new</span> ZOutputStream(ostream))
-            {
-                CopyStream(istream, zstream);
-            }
-        }
-    }
-}
-
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> CopyStream(Stream input, Stream output)
-{
-    <span style="color:#66d9ef">byte</span>[] buffer = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[<span style="color:#ae81ff">2000</span>];
-    <span style="color:#66d9ef">int</span> len;
-    <span style="color:#66d9ef">while</span> ((len = input.Read(buffer, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2000</span>)) &gt; <span style="color:#ae81ff">0</span>)
-    {
-        output.Write(buffer, <span style="color:#ae81ff">0</span>, len);
-    }
-    output.Flush();
-}
-</code></pre></div>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#75715e">// 压缩</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Compress(<span style="color:#66d9ef">string</span> inputpath, <span style="color:#66d9ef">string</span> outputpath)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">using</span> (ZOutputStream zstream = <span style="color:#66d9ef">new</span> ZOutputStream(ostream, zlibConst.Z_BEST_COMPRESSION))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                CopyStream(istream, zstream);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 解压</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Decompress(<span style="color:#66d9ef">string</span> inputpath, <span style="color:#66d9ef">string</span> outputpath)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (FileStream ostream = <span style="color:#66d9ef">new</span> FileStream(outputpath, FileMode.Create, FileAccess.Write))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (FileStream istream = <span style="color:#66d9ef">new</span> FileStream(inputpath, FileMode.Open, FileAccess.Read))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">using</span> (ZOutputStream zstream = <span style="color:#66d9ef">new</span> ZOutputStream(ostream))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                CopyStream(istream, zstream);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> CopyStream(Stream input, Stream output)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">byte</span>[] buffer = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[<span style="color:#ae81ff">2000</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> len;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ((len = input.Read(buffer, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2000</span>)) &gt; <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        output.Write(buffer, <span style="color:#ae81ff">0</span>, len);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    output.Flush();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
                     
                     <HR width="100%" id="EOF">
 		    <p style="color:#777;">最后修改于 2016-08-31</p>

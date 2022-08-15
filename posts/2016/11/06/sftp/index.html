@@ -106,6 +106,16 @@ var _hmt = _hmt || [];
             
             
             
+            <a class="a-block nav-link-item false" href="../../../../../feelings/">
+                体验
+            </a>
+            
+        
+            
+            
+            
+            
+            
             <a class="a-block nav-link-item false" href="../../../../../about/">
                 关于
             </a>
@@ -165,6 +175,16 @@ var _hmt = _hmt || [];
                 
                 <a class="a-block drawer-menu-item active" href="../../../../../posts/">
                     灵感
+                </a>
+                
+            
+                
+                
+                
+                
+                
+                <a class="a-block drawer-menu-item false" href="../../../../../feelings/">
+                    体验
                 </a>
                 
             
@@ -273,59 +293,59 @@ var _hmt = _hmt || [];
 <ol>
 <li>首先建立好sftp的目录：</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir /var/sftp
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir /var/sftp
+</span></span></code></pre></div><ol start="2">
 <li>创建用于sftp的用户和用户组</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">groupadd sftp
-useradd -g sftp -d /var/sftp -s /bin/false sftp
-passwd sftp
-<span style="color:#75715e"># 设置密码</span>
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>groupadd sftp
+</span></span><span style="display:flex;"><span>useradd -g sftp -d /var/sftp -s /bin/false sftp
+</span></span><span style="display:flex;"><span>passwd sftp
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 设置密码</span>
+</span></span></code></pre></div></li>
 <li>通过chroot限制sftp服务的访问目录
 <ol>
 <li>编辑ssh的配置文件，设置chroot目录，把sftp限制在他的用户目录下(%h代表用户目录)，并且禁止掉其他不需要的ssh权限</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">nano /etc/ssh/sshd_config
-<span style="color:#75715e"># 找到Subsystem，注释掉原来的那行</span>
-<span style="color:#75715e">#Subsystem sftp /usr/lib/openssh/sftp-server</span>
-<span style="color:#75715e"># 再添加下面的新行</span>
-Subsystem sftp internal-sftp
-<span style="color:#75715e"># 限制sftp的目录，让他看不到不应该看到的东西</span>
-Match Group sftp
-ChrootDirectory %h
-AllowTcpForwarding no
-X11Forwarding no
-ForceCommand internal-sftp
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano /etc/ssh/sshd_config
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 找到Subsystem，注释掉原来的那行</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Subsystem sftp /usr/lib/openssh/sftp-server</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 再添加下面的新行</span>
+</span></span><span style="display:flex;"><span>Subsystem sftp internal-sftp
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 限制sftp的目录，让他看不到不应该看到的东西</span>
+</span></span><span style="display:flex;"><span>Match Group sftp
+</span></span><span style="display:flex;"><span>ChrootDirectory %h
+</span></span><span style="display:flex;"><span>AllowTcpForwarding no
+</span></span><span style="display:flex;"><span>X11Forwarding no
+</span></span><span style="display:flex;"><span>ForceCommand internal-sftp
+</span></span></code></pre></div><ol start="2">
 <li>创建上传目录并设置权限，ChrootDirectory的目录和其所有上层目录的所有者必须是root，并且权限不能大于755</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cd /var/sftp
-mkdir www
-chmod <span style="color:#ae81ff">770</span> www
-chown sftp:sftp www
-cd ..
-chmod <span style="color:#ae81ff">755</span> sftp
-chown root:root sftp
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /var/sftp
+</span></span><span style="display:flex;"><span>mkdir www
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">770</span> www
+</span></span><span style="display:flex;"><span>chown sftp:sftp www
+</span></span><span style="display:flex;"><span>cd ..
+</span></span><span style="display:flex;"><span>chmod <span style="color:#ae81ff">755</span> sftp
+</span></span><span style="display:flex;"><span>chown root:root sftp
+</span></span></code></pre></div></li>
 <li>设置掩码，以便外部程序能够使用
 <ol>
 <li>sftp上传过程中创建的目录和文件所有者固定为sftp:sftp，权限默认为755，其他用户只能读不能写。这里我们需要修改为可以被组成员读写(当然了解原理后你也可以图省事，直接允许所有用户读写)</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">nano /etc/pam.d/sshd
-<span style="color:#75715e"># 在文件最末尾添加</span>
-session optional pam_umask.so umask<span style="color:#f92672">=</span><span style="color:#ae81ff">0007</span> <span style="color:#75715e"># 也可以是0002</span>
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano /etc/pam.d/sshd
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在文件最末尾添加</span>
+</span></span><span style="display:flex;"><span>session optional pam_umask.so umask<span style="color:#f92672">=</span><span style="color:#ae81ff">0007</span> <span style="color:#75715e"># 也可以是0002</span>
+</span></span></code></pre></div><ol start="2">
 <li>给nginx使用的用户添加用户组sftp，我这里是www-data</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">usermod -G sftp www-data
-</code></pre></div><ol start="3">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>usermod -G sftp www-data
+</span></span></code></pre></div><ol start="3">
 <li>还原shell中的默认umask，避免被sftp覆盖</li>
 </ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">nano /etc/profile
-<span style="color:#75715e"># 在文件最末尾添加</span>
-umask <span style="color:#ae81ff">022</span>
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano /etc/profile
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 在文件最末尾添加</span>
+</span></span><span style="display:flex;"><span>umask <span style="color:#ae81ff">022</span>
+</span></span></code></pre></div></li>
 </ol>
 <p>到此，我们已经顺利的架设了sftp服务，可以使用各种流行的ftp客户端，比如FileZilla、FlashFXP安逸的上传/下载文件啦。</p>
 
