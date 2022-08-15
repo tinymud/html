@@ -375,7 +375,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
 </span></span></code></pre></div></li>
 <li>输出：
-<img src="../../../../../posts/coroutine1.png" alt="1">
+<img src="../../../../../posts/coroutine/1.png" alt="1">
 coroutine的调用和唤醒/回调，比闭包回调慢不少</li>
 </ul>
 <p>(PS. 这里有个插曲，我之前设置的count = 10000000，但是测试coroutine时报内存不足的错误，因此只能下降一个数量级来测试了)</p>
@@ -482,11 +482,11 @@ coroutine的调用和唤醒/回调，比闭包回调慢不少</li>
 </span></span><span style="display:flex;"><span>print(time2 <span style="color:#f92672">-</span> time1, time3 <span style="color:#f92672">-</span> time2)
 </span></span></code></pre></div></li>
 <li>输出：
-<img src="../../../../../posts/coroutine2.png" alt="2">
+<img src="../../../../../posts/coroutine/2.png" alt="2">
 回调的消耗仍然是coroutine处于劣势，但已经比较接近了。启动的消耗，由于coroutine需要创建比较大的堆栈，相对于闭包来说还是比较重度，因此启动仍然远远慢于闭包回调的方式。</li>
 </ul>
 <p>最后，我把一次调用里的异步接口调用次数，改成到10000次(需要封装成多个函数，否则lua会报错：chunk has too many syntax levels)，对比如下(此时次数都改成了count = 1000)：
-<img src="../../../../../posts/coroutine3.png" alt="3">
+<img src="../../../../../posts/coroutine/3.png" alt="3">
 这个时候coroutine的回调消耗优势就上来了。不过一般来说，实际应用中一次调用不可能调用这么多次异步接口。</p>
 <p>之后再来测试内存占用</p>
 <ul>
@@ -587,7 +587,7 @@ coroutine的调用和唤醒/回调，比闭包回调慢不少</li>
 </span></span><span style="display:flex;"><span>print(count2 <span style="color:#f92672">-</span> count1, count3 <span style="color:#f92672">-</span> count2, count3 <span style="color:#f92672">-</span> count1)
 </span></span></code></pre></div></li>
 <li>输出：
-<img src="../../../../../posts/coroutine4.png" alt="4">
+<img src="../../../../../posts/coroutine/4.png" alt="4">
 coroutine的内存占用确实比闭包回调少很多。</li>
 </ul>
 <p>因此，要内存还是要性能，这个看自己的取舍了。</p>

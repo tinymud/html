@@ -376,7 +376,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>输出如下：
-<img src="../../../../../posts/async1.png" alt="1">
+<img src="../../../../../posts/async/1.png" alt="1">
 代码很简单，结果也看似正确，直到我发现一个大问题：</p>
 <h1 id="await后面的代码是在另一个线程执行的">await后面的代码是在另一个线程执行的！！！</h1>
 <p>这不仅会影响到框架的运行，还会导致线程争用资源的问题，也就是说看似同一处的代码，会运行在不同线程，并且有可能并行。如果访问公共资源(如静态变量)还需要加锁，严重影响编程体验和性能。我推测，很可能Task类自带的创建Task的静态函数所产生的Task，设置Complete状态时都是在其他线程，因此导致了await的回调也在该线程执行。于是我把代码稍微改了一下：</p>
@@ -406,7 +406,7 @@ var _hmt = _hmt || [];
 </span></span><span style="display:flex;"><span>        task.Wait(); <span style="color:#75715e">// 这一句其实是没有必要的，并且如果放在SetResult前，会导致死锁</span>
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>输出如下：<img src="../../../../../posts/async2.png" alt="2">
+</span></span></code></pre></div><p>输出如下：<img src="../../../../../posts/async/2.png" alt="2">
 果然全部是在主线程执行了。其中source.SetResult(null);这一句放到框架中，当条件合适时就在主线程Loop中调用，以便唤醒await继续执行剩下的过程。此外，Task类的静态函数所产生的Task，也可以通过一个包装函数，来让在其他线程执行的SetResult，Queue到主线程调用，类似这样：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c#" data-lang="c#"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Task&lt;T&gt; Wrap&lt;T&gt;(Task&lt;T&gt; task)
 </span></span><span style="display:flex;"><span>{
